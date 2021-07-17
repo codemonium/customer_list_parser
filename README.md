@@ -1,6 +1,16 @@
 # CustomerListParser
 
-**TODO: Add description**
+## Usage
+
+### Docker
+```
+gunzip --to-stdout /path/to/file.csv.gz | docker run -i --rm parse
+```
+
+### Mix
+```
+mix parse -f /path/to/file.csv.gz
+```
 
 ## Installation
 

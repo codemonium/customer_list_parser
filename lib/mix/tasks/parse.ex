@@ -6,9 +6,15 @@ defmodule Mix.Tasks.Parse do
 
   @impl Mix.Task
   def run(args) do
-    args
-    |> hd()
-    |> CustomerListParser.extract_app_user_ids()
+    case args do
+      [] ->
+        CustomerListParser.extract_app_user_ids_from_stdin()
+
+      ["-f" | rest] ->
+        path_to_file = hd(rest)
+
+        CustomerListParser.extract_app_user_ids_from_file(path_to_file)
+    end
     |> CustomerListParser.generate_where_clause()
     |> IO.puts()
   end

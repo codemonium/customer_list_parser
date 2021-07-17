@@ -13,8 +13,16 @@ defmodule CustomerListParser do
 
   Note: the CSV files always use a semi-colon as the separator.
   """
-  def extract_app_user_ids(path_to_file) when is_binary(path_to_file) do
-    {:ok, pid} = path_to_file |> File.read!() |> :zlib.gunzip() |> StringIO.open()
+  def extract_app_user_ids_from_file(path_to_file) when is_binary(path_to_file) do
+    path_to_file |> File.read!() |> :zlib.gunzip() |> extract_app_user_ids()
+  end
+
+  def extract_app_user_ids_from_stdin() do
+    IO.read(:all) |> extract_app_user_ids()
+  end
+
+  def extract_app_user_ids(string) when is_binary(string) do
+    {:ok, pid} = string |> StringIO.open()
 
     app_user_ids =
       pid
